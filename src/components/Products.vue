@@ -42,8 +42,13 @@
     <!-- Products tab & slick -->
   </div>
 </template>
-<script>
+<script scoped>
+/* eslint-disable no-console */
+/* eslint-disable no-undef */
+
 import Product from "./Product.vue";
+import Repository from "../repositories/RepositoryFactory";
+const ProductModel = Repository.get("products");
 export default {
   data() {
     return {
@@ -55,18 +60,49 @@ export default {
   },
 
   created() {
+    this.$cart.getTotalPrice();
     this.loadProducts();
   },
 
   methods: {
-    loadProducts() {
-      this.$http.get("api/products").then(response => {
-        this.products = response.body;
-        // console.log(this.products.length);
-      });
+    async loadProducts() {
+      const { data } = await ProductModel.get();
+      this.products = data;
     }
+  },
+
+  updated() {
+    $(".products-slick").each(function() {
+      var $this = $(this);
+      var $nav = $this.attr("data-nav");
+
+      $this.slick({
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        autoplay: true,
+        infinite: true,
+        speed: 300,
+        dots: false,
+        arrows: true,
+        appendArrows: $nav ? $nav : false,
+        responsive: [
+          {
+            breakpoint: 991,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1
+            }
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+        ]
+      });
+    });
   }
 };
 </script>
-
-

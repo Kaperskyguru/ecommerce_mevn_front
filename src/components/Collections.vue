@@ -1,63 +1,29 @@
 <template>
-  <div class="row">
-    <!-- shop -->
-    <div class="col-md-4 col-xs-6">
-      <div class="shop">
-        <div class="shop-img">
-          <img src="assets/img/shop01.png" alt>
-        </div>
-        <div class="shop-body">
-          <h3>
-            Laptop
-            <br>Collection
-          </h3>
-          <a href="#" class="cta-btn">
-            Shop now
-            <i class="fa fa-arrow-circle-right"></i>
-          </a>
-        </div>
+  <div class="col-md-4 col-xs-6">
+    <div class="shop">
+      <div class="shop-img">
+        <img src="assets/img/shop01.png" alt />
       </div>
-    </div>
-    <!-- /shop -->
+      <div class="shop-body">
+        <h3>
+          {{ category.name }}
+          <br />Collection
+        </h3>
 
-    <!-- shop -->
-    <div class="col-md-4 col-xs-6">
-      <div class="shop">
-        <div class="shop-img">
-          <img src="assets/img/shop03.png" alt>
-        </div>
-        <div class="shop-body">
-          <h3>
-            Accessories
-            <br>Collection
-          </h3>
-          <a href="#" class="cta-btn">
-            Shop now
-            <i class="fa fa-arrow-circle-right"></i>
-          </a>
-        </div>
+        <router-link
+          class="nav-link cta-btn"
+          :to="{name:'products', params:{ category: category.category_id }}"
+        >
+          Shop now
+          <i class="fa fa-arrow-circle-right"></i>
+        </router-link>
       </div>
     </div>
-    <!-- /shop -->
-
-    <!-- shop -->
-    <div class="col-md-4 col-xs-6">
-      <div class="shop">
-        <div class="shop-img">
-          <img src="assets/img/shop02.png" alt>
-        </div>
-        <div class="shop-body">
-          <h3>
-            Cameras
-            <br>Collection
-          </h3>
-          <a href="#" class="cta-btn">
-            Shop now
-            <i class="fa fa-arrow-circle-right"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-    <!-- /shop -->
   </div>
 </template>
+
+<script>
+export default {
+  props: ["category"]
+};
+</script>

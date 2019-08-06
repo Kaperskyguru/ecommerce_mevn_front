@@ -7,17 +7,17 @@
           <ul class="header-links pull-left">
             <li>
               <a href="#">
-                <i class="fa fa-phone"></i> +021-95-51-84
+                <i class="fa fa-phone"></i> +234 (0)8145655380
               </a>
             </li>
             <li>
               <a href="#">
-                <i class="fa fa-envelope-o"></i> email@email.com
+                <i class="fa fa-envelope-o"></i> solomoneseme@gmail.com
               </a>
             </li>
             <li>
               <a href="#">
-                <i class="fa fa-map-marker"></i> 1734 Stonecoal Road
+                <i class="fa fa-map-marker"></i> 24 wokenkoro Street
               </a>
             </li>
           </ul>
@@ -46,9 +46,11 @@
             <!-- LOGO -->
             <div class="col-md-3">
               <div class="header-logo">
-                <a href="#" class="logo">
-                  <img src="assets/img/logo.png" alt>
-                </a>
+                <router-link to="/" class="logo">
+                  <!-- <a href="#" class="logo"> -->
+                  <img src="assets/img/logo.png" alt />
+                  <!-- </a> -->
+                </router-link>
               </div>
             </div>
             <!-- /LOGO -->
@@ -59,10 +61,13 @@
                 <form>
                   <select class="input-select">
                     <option value="0">All Categories</option>
-                    <option value="1">Category 01</option>
-                    <option value="1">Category 02</option>
+                    <option
+                      v-for="(category, index) in categories"
+                      :key="index"
+                      :value="category.category_id"
+                    >{{ category.name }}</option>
                   </select>
-                  <input class="input" placeholder="Search here">
+                  <input class="input" placeholder="Search here" />
                   <button class="search-btn">Search</button>
                 </form>
               </div>
@@ -87,54 +92,38 @@
                   <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                     <i class="fa fa-shopping-cart"></i>
                     <span>Your Cart</span>
-                    <div class="qty">3</div>
+                    <div class="qty">{{ carts.length }}</div>
                   </a>
                   <div class="cart-dropdown">
                     <div class="cart-list">
-                      <div class="product-widget">
+                      <div class="product-widget" v-for="(product, i) in carts" :key="i">
                         <div class="product-img">
-                          <img src="assets/img/product01.png" alt>
+                          <img src="assets/img/product01.png" />
                         </div>
                         <div class="product-body">
                           <h3 class="product-name">
-                            <a href="#">product name goes here</a>
+                            <a href="#">{{ product.name }}</a>
                           </h3>
                           <h4 class="product-price">
-                            <span class="qty">1x</span>$980.00
+                            <span class="qty">1x</span>
+                            ${{ product.price }}
                           </h4>
                         </div>
-                        <button class="delete">
-                          <i class="fa fa-close"></i>
-                        </button>
-                      </div>
-
-                      <div class="product-widget">
-                        <div class="product-img">
-                          <img src="assets/img/product02.png" alt>
-                        </div>
-                        <div class="product-body">
-                          <h3 class="product-name">
-                            <a href="#">product name goes here</a>
-                          </h3>
-                          <h4 class="product-price">
-                            <span class="qty">3x</span>$980.00
-                          </h4>
-                        </div>
-                        <button class="delete">
+                        <button class="delete" v-on:click="removeProduct(product)">
                           <i class="fa fa-close"></i>
                         </button>
                       </div>
                     </div>
                     <div class="cart-summary">
-                      <small>3 Item(s) selected</small>
-                      <h5>SUBTOTAL: $2940.00</h5>
+                      <small>{{ carts.length }} Item(s) selected</small>
+                      <h5>SUBTOTAL: ${{ getTotalPrice() }}</h5>
                     </div>
                     <div class="cart-btns">
                       <a href="#">View Cart</a>
-                      <a href="#">
+                      <router-link to="/checkout">
                         Checkout
                         <i class="fa fa-arrow-circle-right"></i>
-                      </a>
+                      </router-link>
                     </div>
                   </div>
                 </div>
@@ -169,25 +158,14 @@
           <!-- NAV -->
           <ul class="main-nav nav navbar-nav">
             <li class="active">
-              <a href="#">Home</a>
+              <router-link to="/" class="logo">Home</router-link>
             </li>
-            <li>
-              <a href="#">Hot Deals</a>
-            </li>
-            <li>
-              <a href="#">Categories</a>
-            </li>
-            <li>
-              <a href="#">Laptops</a>
-            </li>
-            <li>
-              <a href="#">Smartphones</a>
-            </li>
-            <li>
-              <a href="#">Cameras</a>
-            </li>
-            <li>
-              <a href="#">Accessories</a>
+            <!-- ISSUE OF LOADING A CATEGORIES HERE -->
+            <li v-for="(category, index) in categories" :key="index">
+              <router-link
+                class="nav-link"
+                :to="{name:'products', params:{ category: category.category_id }}"
+              >{{ category.name }}</router-link>
             </li>
           </ul>
           <!-- /NAV -->
@@ -199,3 +177,37 @@
     <!-- /NAVIGATION -->
   </div>
 </template>
+
+<script>
+import Repository from "../repositories/RepositoryFactory";
+const CategoryRepository = Repository.get("category");
+export default {
+  data() {
+    return {
+      categories: [],
+      carts: []
+    };
+  },
+  created() {
+    this.loadCategories();
+    this.loadCartProducts();
+  },
+  methods: {
+    async loadCategories() {
+      const { data } = await CategoryRepository.get();
+      this.categories = data;
+    },
+    loadCartProducts() {
+      this.carts = this.$cart.getCarts();
+    },
+    getTotalPrice() {
+      return this.$cart.getTotalPrice();
+    },
+    removeProduct(product) {
+      if (this.$cart.has(product)) {
+        this.$cart.remove(product);
+      }
+    }
+  }
+};
+</script>

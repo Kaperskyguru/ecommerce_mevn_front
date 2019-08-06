@@ -1,7 +1,7 @@
 <template>
   <div class="product">
     <div class="product-img">
-      <img src="assets/img/product01.png" alt>
+      <img src="assets/img/product01.png" alt />
       <div class="product-label">
         <span class="sale">-30%</span>
         <span class="new">NEW</span>
@@ -10,7 +10,7 @@
     <div class="product-body">
       <p class="product-category">Category</p>
       <h3 class="product-name">
-        <a href="#">{{product.name}}</a>
+        <router-link :to="{name:'product', params:{ id: product.product_id }}">{{product.name}}</router-link>
       </h3>
       <h4 class="product-price">
         ${{product.discounted_price}}
@@ -48,9 +48,10 @@
       </div>
     </div>
     <div class="add-to-cart">
-      <button class="add-to-cart-btn">
+      <button class="add-to-cart-btn" v-on:click="addToCart(product)">
         <i class="fa fa-shopping-cart"></i> add to cart
       </button>
+      <span class="text-danger" id="info">{{error}}</span>
     </div>
   </div>
 </template>
@@ -60,11 +61,19 @@ export default {
   props: ["product"],
   data() {
     return {
-      id: 0
+      error: ""
     };
   },
 
-  created() {}
+  methods: {
+    addToCart(product) {
+      if (this.$cart.has(product)) {
+        this.error = "Product already added to cart";
+      } else {
+        this.$cart.add(product);
+      }
+    }
+  }
 };
 </script>
 

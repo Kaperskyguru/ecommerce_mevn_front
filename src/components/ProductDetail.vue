@@ -4,19 +4,19 @@
     <div class="col-md-5 col-md-push-2">
       <div id="product-main-img">
         <div class="product-preview">
-          <img src="assets/img/product01.png" alt>
+          <img src="assets/img/product01.png" alt />
         </div>
 
         <div class="product-preview">
-          <img src="assets/img/product03.png" alt>
+          <img src="assets/img/product03.png" alt />
         </div>
 
         <div class="product-preview">
-          <img src="assets/img/product06.png" alt>
+          <img src="assets/img/product06.png" alt />
         </div>
 
         <div class="product-preview">
-          <img src="assets/img/product08.png" alt>
+          <img src="assets/img/product08.png" alt />
         </div>
       </div>
     </div>
@@ -26,19 +26,19 @@
     <div class="col-md-2 col-md-pull-5">
       <div id="product-imgs">
         <div class="product-preview">
-          <img src="assets/img/product01.png" alt>
+          <img src="assets/img/product01.png" alt />
         </div>
 
         <div class="product-preview">
-          <img src="assets/img/product03.png" alt>
+          <img src="assets/img/product03.png" alt />
         </div>
 
         <div class="product-preview">
-          <img src="assets/img/product06.png" alt>
+          <img src="assets/img/product06.png" alt />
         </div>
 
         <div class="product-preview">
-          <img src="assets/img/product08.png" alt>
+          <img src="assets/img/product08.png" alt />
         </div>
       </div>
     </div>
@@ -47,7 +47,7 @@
     <!-- Product details -->
     <div class="col-md-5">
       <div class="product-details">
-        <h2 class="product-name">product name goes here</h2>
+        <h2 class="product-name">{{ product.name }}</h2>
         <div>
           <div class="product-rating">
             <i class="fa fa-star"></i>
@@ -60,13 +60,12 @@
         </div>
         <div>
           <h3 class="product-price">
-            $980.00
+            ${{ product.price }}
             <del class="product-old-price">$990.00</del>
           </h3>
           <span class="product-available">In Stock</span>
         </div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
+        <p>{{ product.description }}</p>
         <div class="product-options">
           <label>
             Size
@@ -86,7 +85,7 @@
           <div class="qty-label">
             Qty
             <div class="input-number">
-              <input type="number">
+              <input type="number" />
               <span class="qty-up">+</span>
               <span class="qty-down">-</span>
             </div>
@@ -169,7 +168,7 @@
           <div id="tab1" class="tab-pane fade in active">
             <div class="row">
               <div class="col-md-12">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p>{{ product.description }}</p>
               </div>
             </div>
           </div>
@@ -179,7 +178,7 @@
           <div id="tab2" class="tab-pane fade in">
             <div class="row">
               <div class="col-md-12">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p>{{ product.description }}</p>
               </div>
             </div>
           </div>
@@ -219,10 +218,51 @@ import Reviews from "./Reviews.vue";
 import AddReview from "./AddReview";
 import Ratings from "./Ratings.vue";
 export default {
+  props: ["product"],
   components: {
     Reviews,
     AddReview,
     Ratings
+  },
+  updated() {
+    /* eslint-disable */
+    // Product Main img Slick
+    $("#product-main-img").slick({
+      infinite: true,
+      speed: 300,
+      dots: false,
+      arrows: true,
+      fade: true,
+      asNavFor: "#product-imgs"
+    });
+
+    // Product imgs Slick
+    $("#product-imgs").slick({
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      arrows: true,
+      centerMode: true,
+      focusOnSelect: true,
+      centerPadding: 0,
+      vertical: true,
+      asNavFor: "#product-main-img",
+      responsive: [
+        {
+          breakpoint: 991,
+          settings: {
+            vertical: false,
+            arrows: false,
+            dots: true
+          }
+        }
+      ]
+    });
+
+    // Product img zoom
+    var zoomMainProduct = document.getElementById("product-main-img");
+    if (zoomMainProduct) {
+      $("#product-main-img .product-preview").zoom();
+    }
   }
 };
 </script>

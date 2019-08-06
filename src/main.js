@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VueResource from 'vue-resource';
+import cart from './packages/Cart.js';
 
 import Router from './routes.js'
-Vue.config.productionTip = false
+Vue.config.productionTip = true
 Vue.use(VueResource);
+Vue.use(cart);
+
 
 Vue.http.options.root = 'http://127.0.0.1:8083'
 
