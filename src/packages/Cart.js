@@ -11,6 +11,7 @@ export default {
             remove: function (product) {
                 this.cart.splice(this.cart.indexOf(product), 1);
                 localStorage.removeItem("product_" + product.product_id);
+                return this.cart;
             },
             has: function (product) {
                 if (localStorage.getItem("product_" + product.product_id)) {
@@ -24,26 +25,30 @@ export default {
                 }
             },
             getCarts: function () {
+                let arr = [];
+                let local = localStorage;
 
-                for (const key in localStorage) {
-                    if (localStorage.getItem(key) && key.startsWith("product_")) {
-                        this.cart.push(JSON.parse(localStorage.getItem(key)))
+                for (const key in local) {
+
+                    if (!local.hasOwnProperty(key)) {
+                        continue; // skip keys like "setItem", "getItem" etc
+                    }
+                    if (local.getItem(key) && key.startsWith("product_")) {
+                        arr.push(JSON.parse(local.getItem(key)));
                     }
                 }
-                return this.cart
+                this.cart = arr;
+                return this.cart;
             },
 
             getTotalPrice: function () {
                 let amount = 0;
 
-                for (const key in this.cart) {
-                    if (this.cart.hasOwnProperty(key)) {
-                        const element = this.cart[key];
-                        amount += parseFloat(element.price);
-                    }
-                }
+                let add = (acc, product) => parseFloat(product.price) + acc;
 
-                return amount.toFixed(2);
+                let result = this.cart.reduce(add, amount);
+
+                return result.toFixed(2);
             }
         };
 

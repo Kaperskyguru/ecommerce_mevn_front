@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import { errorAlert, successAlert } from "../assets/utils/sweetAlerts";
 export default {
   props: ["product"],
   data() {
@@ -68,9 +69,10 @@ export default {
   methods: {
     addToCart(product) {
       if (this.$cart.has(product)) {
-        this.error = "Product already added to cart";
+        errorAlert();
       } else {
         this.$cart.add(product);
+        successAlert();
       }
     }
   }

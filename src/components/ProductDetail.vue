@@ -90,7 +90,7 @@
               <span class="qty-down">-</span>
             </div>
           </div>
-          <button class="add-to-cart-btn">
+          <button class="add-to-cart-btn" v-on:click="addToCart(product)">
             <i class="fa fa-shopping-cart"></i> add to cart
           </button>
         </div>
@@ -217,12 +217,23 @@
 import Reviews from "./Reviews.vue";
 import AddReview from "./AddReview";
 import Ratings from "./Ratings.vue";
+import { successAlert, errorAlert } from "../assets/utils/sweetAlerts";
 export default {
   props: ["product"],
   components: {
     Reviews,
     AddReview,
     Ratings
+  },
+  methods: {
+    addToCart(product) {
+      if (this.$cart.has(product)) {
+        errorAlert();
+      } else {
+        this.$cart.add(product);
+        successAlert();
+      }
+    }
   },
   updated() {
     /* eslint-disable */

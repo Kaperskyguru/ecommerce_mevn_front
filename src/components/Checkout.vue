@@ -119,14 +119,12 @@
               </div>
             </div>
             <div class="order-products">
-              <div class="order-col">
-                <div>1x Product Name Goes Here</div>
-                <div>$980.00</div>
-              </div>
-              <div class="order-col">
-                <div>2x Product Name Goes Here</div>
-                <div>$980.00</div>
-              </div>
+              <span v-for="(product,i) in carts" :key="i">
+                <div class="order-col">
+                  <div>{{ product.name }}</div>
+                  <div>${{ product.price }}</div>
+                </div>
+              </span>
             </div>
             <div class="order-col">
               <div>Shiping</div>
@@ -139,7 +137,7 @@
                 <strong>TOTAL</strong>
               </div>
               <div>
-                <strong class="order-total">$2940.00</strong>
+                <strong class="order-total">${{ totalPrice() }}</strong>
               </div>
             </div>
           </div>
@@ -207,5 +205,20 @@
 </template>
 
 <script>
-export default {};
+import { mapState } from "vuex";
+export default {
+  data() {
+    return {};
+  },
+
+  computed: {
+    ...mapState(["carts"])
+  },
+  created() {},
+  methods: {
+    totalPrice() {
+      return this.$cart.getTotalPrice();
+    }
+  }
+};
 </script>

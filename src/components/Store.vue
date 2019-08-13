@@ -250,7 +250,9 @@
                   <div class="product-body">
                     <p class="product-category">{{ product.category }}</p>
                     <h3 class="product-name">
-                      <a href="#">{{ product.name }}</a>
+                      <router-link
+                        :to="{name:'product', params:{ id: product.product_id }}"
+                      >{{product.name}}</router-link>
                     </h3>
                     <h4 class="product-price">
                       ${{product.discounted_price}}
@@ -279,7 +281,7 @@
                     </div>
                   </div>
                   <div class="add-to-cart">
-                    <button class="add-to-cart-btn">
+                    <button class="add-to-cart-btn" v-on:click="addToCart(product)">
                       <i class="fa fa-shopping-cart"></i> add to cart
                     </button>
                   </div>
@@ -324,6 +326,7 @@
 
 <script>
 import Repository from "../repositories/RepositoryFactory";
+import { errorAlert, successAlert } from "../assets/utils/sweetAlerts";
 const ProductsRepository = Repository.get("products");
 export default {
   data() {
@@ -340,8 +343,18 @@ export default {
     async getProducts(id) {
       const { data } = await ProductsRepository.getProductsByCategory(id);
       this.products = data;
+    },
+
+    addToCart(product) {
+      if (this.$cart.has(product)) {
+        errorAlert();
+      } else {
+        this.$cart.add(product);
+        successAlert();
+      }
     }
   },
+
   beforeRouteUpdate(to, from, next) {
     this.getProducts(to.params.category);
     next();

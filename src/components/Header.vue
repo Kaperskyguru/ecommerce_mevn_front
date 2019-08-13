@@ -179,33 +179,32 @@
 </template>
 
 <script>
-import Repository from "../repositories/RepositoryFactory";
-const CategoryRepository = Repository.get("category");
+import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      categories: [],
-      carts: []
+      // carts: this.$store.state.carts
     };
   },
+
+  computed: {
+    ...mapState(["categories", "carts"]),
+    ...mapMutations(["removeCartProduct"])
+  },
   created() {
-    this.loadCategories();
-    this.loadCartProducts();
+    this.$store.commit("loadCartProducts");
+    // this.loadCartProducts();
   },
   methods: {
-    async loadCategories() {
-      const { data } = await CategoryRepository.get();
-      this.categories = data;
-    },
-    loadCartProducts() {
-      this.carts = this.$cart.getCarts();
-    },
+    // loadCartProducts() {
+    //   this.carts = this.$cart.getCarts();
+    // },
     getTotalPrice() {
       return this.$cart.getTotalPrice();
     },
     removeProduct(product) {
       if (this.$cart.has(product)) {
-        this.$cart.remove(product);
+        this.$store.commit("removeCartProduct", product);
       }
     }
   }

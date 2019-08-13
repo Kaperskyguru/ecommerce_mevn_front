@@ -5,7 +5,7 @@
       <div class="container">
         <div class="row">
           <collections
-            v-for="( category, index ) in getRandomCollections()"
+            v-for="( category, index ) in randomCategories"
             :category="category"
             :key="index"
           ></collections>
@@ -70,14 +70,11 @@ import TopSelling from "./TopSelling.vue";
 import TopSellingsList from "./TopSellingsList.vue";
 import HotDeal from "./HotDeal.vue";
 import Newsletter from "./Newsletter.vue";
+import { mapState } from "vuex";
 
-import Repository from "../repositories/RepositoryFactory";
-const CategoryRepository = Repository.get("category");
 export default {
   data() {
-    return {
-      categories: []
-    };
+    return {};
   },
   components: {
     Collections,
@@ -87,15 +84,17 @@ export default {
     HotDeal,
     Newsletter
   },
-  created() {
-    this.loadCategories();
+
+  computed: {
+    ...mapState(["categories"]),
+
+    randomCategories() {
+      return this.getRandomCollections();
+    }
   },
+  created() {},
 
   methods: {
-    async loadCategories() {
-      const { data } = await CategoryRepository.get();
-      this.categories = data;
-    },
     getRandomCollections() {
       const shuffled = this.categories.sort(function() {
         return 0.5 - Math.random();

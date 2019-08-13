@@ -47,31 +47,28 @@
 /* eslint-disable no-undef */
 
 import Product from "./Product.vue";
-import Repository from "../repositories/RepositoryFactory";
-const ProductModel = Repository.get("products");
+import { mapState } from "vuex";
+
 export default {
   data() {
-    return {
-      products: []
-    };
+    return {};
   },
   components: {
     Product
   },
 
+  computed: {
+    ...mapState(["products"])
+  },
+
   created() {
-    this.$cart.getTotalPrice();
-    this.loadProducts();
+    console.log("Created");
   },
 
-  methods: {
-    async loadProducts() {
-      const { data } = await ProductModel.get();
-      this.products = data;
-    }
-  },
+  methods: {},
 
-  updated() {
+  mounted() {
+    console.log("Mounted");
     $(".products-slick").each(function() {
       var $this = $(this);
       var $nav = $this.attr("data-nav");
@@ -103,6 +100,11 @@ export default {
         ]
       });
     });
+  },
+
+  updated() {
+    console.log("Updated");
   }
+  // mounted() {}
 };
 </script>
