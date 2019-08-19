@@ -10,58 +10,13 @@
           <!-- aside Widget -->
           <div class="aside">
             <h3 class="aside-title">Categories</h3>
-            <div class="checkbox-filter">
+            <div class="checkbox-filter" v-for="(category, index) in categories" :key="index">
               <div class="input-checkbox">
-                <input type="checkbox" id="category-1" />
-                <label for="category-1">
+                <input type="checkbox" :id="`category-${index +1}`" />
+                <label :for="`category-${index +1}`">
                   <span></span>
-                  Laptops
-                  <small>(120)</small>
-                </label>
-              </div>
-
-              <div class="input-checkbox">
-                <input type="checkbox" id="category-2" />
-                <label for="category-2">
-                  <span></span>
-                  Smartphones
-                  <small>(740)</small>
-                </label>
-              </div>
-
-              <div class="input-checkbox">
-                <input type="checkbox" id="category-3" />
-                <label for="category-3">
-                  <span></span>
-                  Cameras
-                  <small>(1450)</small>
-                </label>
-              </div>
-
-              <div class="input-checkbox">
-                <input type="checkbox" id="category-4" />
-                <label for="category-4">
-                  <span></span>
-                  Accessories
-                  <small>(578)</small>
-                </label>
-              </div>
-
-              <div class="input-checkbox">
-                <input type="checkbox" id="category-5" />
-                <label for="category-5">
-                  <span></span>
-                  Laptops
-                  <small>(120)</small>
-                </label>
-              </div>
-
-              <div class="input-checkbox">
-                <input type="checkbox" id="category-6" />
-                <label for="category-6">
-                  <span></span>
-                  Smartphones
-                  <small>(740)</small>
+                  {{ category.name }}
+                  <small>({{ totalProductsInCategory(category.category_id) }})</small>
                 </label>
               </div>
             </div>
@@ -237,7 +192,7 @@
           <div class="row">
             <!-- product -->
             <!-- ============================================================ -->
-            <span v-for="( product, index ) in products" :key="index">
+            <span v-for="( product, index ) in catProducts" :key="index">
               <div class="col-md-4 col-xs-6">
                 <div class="product">
                   <div class="product-img">
@@ -327,11 +282,13 @@
 <script>
 import Repository from "../repositories/RepositoryFactory";
 import { errorAlert, successAlert } from "../assets/utils/sweetAlerts";
+import { mapState } from "vuex";
 const ProductsRepository = Repository.get("products");
 export default {
   data() {
     return {
-      products: []
+      catProducts: [],
+      totalProducts: []
     };
   },
 
@@ -339,10 +296,15 @@ export default {
     this.getProducts(this.$route.params.category);
   },
 
+  computed: {
+    ...mapState(["productCategories"]),
+    ...mapState(["categories"])
+  },
+
   methods: {
     async getProducts(id) {
       const { data } = await ProductsRepository.getProductsByCategory(id);
-      this.products = data;
+      this.catProducts = data;
     },
 
     addToCart(product) {
@@ -352,6 +314,14 @@ export default {
         this.$cart.add(product);
         successAlert();
       }
+    },
+
+    // topSelling() {},
+    totalProductsInCategory(cat) {
+      let cats = this.productCategories.filter(value => {
+        return value.category_id == cat;
+      });
+      return cats.length;
     }
   },
 

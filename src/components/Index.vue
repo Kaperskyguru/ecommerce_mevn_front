@@ -70,6 +70,7 @@ import TopSelling from "./TopSelling.vue";
 import TopSellingsList from "./TopSellingsList.vue";
 import HotDeal from "./HotDeal.vue";
 import Newsletter from "./Newsletter.vue";
+
 import { mapState } from "vuex";
 
 export default {

@@ -157,16 +157,18 @@
         <div id="responsive-nav">
           <!-- NAV -->
           <ul class="main-nav nav navbar-nav">
-            <li class="active">
-              <router-link to="/" class="logo">Home</router-link>
-            </li>
+            <router-link to="/" tag="li" class="logo">
+              <a>Home</a>
+            </router-link>
             <!-- ISSUE OF LOADING A CATEGORIES HERE -->
-            <li v-for="(category, index) in categories" :key="index">
-              <router-link
-                class="nav-link"
-                :to="{name:'products', params:{ category: category.category_id }}"
-              >{{ category.name }}</router-link>
-            </li>
+            <router-link
+              v-for="(category, index) in categories"
+              :key="index"
+              tag="li"
+              :to="{name:'products', params:{ category: category.category_id }}"
+            >
+              <a>{{ category.name }}</a>
+            </router-link>
           </ul>
           <!-- /NAV -->
         </div>

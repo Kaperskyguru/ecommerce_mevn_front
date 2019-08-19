@@ -61,14 +61,11 @@ export default {
     ...mapState(["products"])
   },
 
-  created() {
-    console.log("Created");
-  },
+  created() {},
 
   methods: {},
 
   mounted() {
-    console.log("Mounted");
     $(".products-slick").each(function() {
       var $this = $(this);
       var $nav = $this.attr("data-nav");
@@ -102,9 +99,7 @@ export default {
     });
   },
 
-  updated() {
-    console.log("Updated");
-  }
+  updated() {}
   // mounted() {}
 };
 </script>

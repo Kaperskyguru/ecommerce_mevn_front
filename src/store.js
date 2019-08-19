@@ -11,7 +11,8 @@ const store = new Vuex.Store({
     state: {
         categories: [],
         products: [],
-        carts: []
+        carts: [],
+        productCategories: [],
     },
 
     actions: {
@@ -26,6 +27,11 @@ const store = new Vuex.Store({
         }) {
             commit("getProducts", await ProductRepository.get())
         },
+        async getProductCategories({
+            commit
+        }) {
+            commit("loadProductCategories", await ProductRepository.getProductCategories());
+        }
 
     },
 
@@ -51,6 +57,13 @@ const store = new Vuex.Store({
         removeCartProduct: (state, product) => {
             state.carts = Vue.prototype.$cart.remove(product);
         },
+
+        loadProductCategories: (state, response) => {
+            const {
+                data
+            } = response;
+            state.productCategories = data
+        }
     },
 
     getters: {

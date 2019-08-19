@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="product-body">
-      <p class="product-category">Category</p>
+      <p class="product-category">{{ product.category }}</p>
       <h3 class="product-name">
         <router-link :to="{name:'product', params:{ id: product.product_id }}">{{product.name}}</router-link>
       </h3>
