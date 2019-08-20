@@ -20,9 +20,6 @@ export default {
     getProductsByCategory(id) {
         return Client.get(`${resource}/category/${id}`);
     },
-    async totalProducts(id) {
-        return await Client.get(`${resource}/total/${id}`)
-    },
     getProductCategories() {
         return Client.get(`productcategories`)
     }

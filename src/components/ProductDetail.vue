@@ -70,13 +70,21 @@
           <label>
             Size
             <select class="input-select">
-              <option value="0">X</option>
+              <option
+                v-for="(attribute, index) in sizeAttributes"
+                :key="index"
+                :value="attribute.attribute_value_id"
+              >{{attribute.value}}</option>
             </select>
           </label>
           <label>
             Color
             <select class="input-select">
-              <option value="0">Red</option>
+              <option
+                v-for="(attribute, index) in colorAttributes"
+                :key="index"
+                :value="attribute.attribute_value_id"
+              >{{attribute.value}}</option>
             </select>
           </label>
         </div>
@@ -218,12 +226,17 @@ import Reviews from "./Reviews.vue";
 import AddReview from "./AddReview";
 import Ratings from "./Ratings.vue";
 import { successAlert, errorAlert } from "../assets/utils/sweetAlerts";
+import { mapState } from "vuex";
 export default {
   props: ["product"],
   components: {
     Reviews,
     AddReview,
     Ratings
+  },
+
+  computed: {
+    ...mapState(["sizeAttributes", "colorAttributes"])
   },
   methods: {
     addToCart(product) {

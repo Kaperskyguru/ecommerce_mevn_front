@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import Repository from "./repositories/RepositoryFactory";
 const CategoryRepository = Repository.get("category");
 const ProductRepository = Repository.get("products");
+const AttributeRepository = Repository.get("attributes");
 
 Vue.use(Vuex);
 
@@ -13,6 +14,8 @@ const store = new Vuex.Store({
         products: [],
         carts: [],
         productCategories: [],
+        colorAttributes: ['Red'],
+        sizeAttributes: ['S']
     },
 
     actions: {
@@ -31,6 +34,18 @@ const store = new Vuex.Store({
             commit
         }) {
             commit("loadProductCategories", await ProductRepository.getProductCategories());
+        },
+        async loadSizeAttributes({
+            commit,
+            attribute
+        }) {
+            commit("loadSizeAttributes", await AttributeRepository.find(1));
+        },
+        async loadColorAttributes({
+            commit,
+            attribute
+        }) {
+            commit("loadColorAttributes", await AttributeRepository.find(2));
         }
 
     },
@@ -63,6 +78,18 @@ const store = new Vuex.Store({
                 data
             } = response;
             state.productCategories = data
+        },
+        loadSizeAttributes: (state, response) => {
+            const {
+                data
+            } = response;
+            state.sizeAttributes = data;
+        },
+        loadColorAttributes: (state, response) => {
+            const {
+                data
+            } = response;
+            state.colorAttributes = data;
         }
     },
 
