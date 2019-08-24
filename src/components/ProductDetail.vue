@@ -56,7 +56,7 @@
             <i class="fa fa-star"></i>
             <i class="fa fa-star-o"></i>
           </div>
-          <a class="review-link" href="#">10 Review(s) | Add your review</a>
+          <a class="review-link">{{reviews.length}} Review(s) | Add your review</a>
         </div>
         <div>
           <h3 class="product-price">
@@ -119,11 +119,13 @@
         <ul class="product-links">
           <li>Category:</li>
           <li>
-            <a href="#">Headphones</a>
+            <router-link tag="li" :to="{name:'products', params:{ category: product.category_id }}">
+              <a>{{ product.category }}</a>
+            </router-link>
           </li>
-          <li>
+          <!-- <li>
             <a href="#">Accessories</a>
-          </li>
+          </li>-->
         </ul>
 
         <ul class="product-links">
@@ -165,7 +167,7 @@
             <a data-toggle="tab" href="#tab2">Details</a>
           </li>
           <li>
-            <a data-toggle="tab" href="#tab3">Reviews (3)</a>
+            <a data-toggle="tab" href="#tab3">Reviews ({{reviews.length}})</a>
           </li>
         </ul>
         <!-- /product tab nav -->
@@ -197,17 +199,17 @@
             <div class="row">
               <!-- Rating -->
               <div class="col-md-3">
-                <ratings></ratings>
+                <ratings :productId="product.product_id"></ratings>
               </div>
               <!-- /Rating -->
 
               <!-- Reviews -->
-              <reviews></reviews>
+              <reviews :productId="product.product_id"></reviews>
               <!-- /Reviews -->
 
               <!-- Review Form -->
               <div class="col-md-3">
-                <add-review></add-review>
+                <add-review :productId="product.product_id"></add-review>
               </div>
               <!-- /Review Form -->
             </div>
@@ -236,15 +238,17 @@ export default {
   },
 
   computed: {
-    ...mapState(["sizeAttributes", "colorAttributes"])
+    ...mapState(["sizeAttributes", "colorAttributes", "reviews"])
   },
   methods: {
     addToCart(product) {
       if (this.$cart.has(product)) {
-        errorAlert();
+        errorAlert({ message: "Product already added to cart" });
       } else {
         this.$cart.add(product);
-        successAlert();
+        successAlert({
+          message: "product added to cart"
+        });
       }
     }
   },

@@ -1,29 +1,26 @@
 <template>
-  <div id="breadcrumb" class="section">
-    <!-- container -->
-    <div class="container">
-      <!-- row -->
-      <div class="row">
-        <div class="col-md-12">
-          <ul class="breadcrumb-tree">
-            <li>
-              <a href="#">Home</a>
-            </li>
-            <li>
-              <a href="#">All Categories</a>
-            </li>
-            <li>
-              <a href="#">Accessories</a>
-            </li>
-            <li>
-              <a href="#">Headphones</a>
-            </li>
-            <li class="active">Product name goes here</li>
-          </ul>
-        </div>
-      </div>
-      <!-- /row -->
+  <div class="row">
+    <div class="col-md-12">
+      <ul class="breadcrumb-tree">
+        <li>
+          <router-link tag="li" to="/">
+            <a>Home</a>
+          </router-link>
+        </li>
+        <li>
+          <a>All Categories</a>
+        </li>
+        <router-link tag="li" :to="{name:'products', params:{ category: product.category_id }}">
+          <a>{{ product.category }}</a>
+        </router-link>
+        <li class="active">{{ product.name }}</li>
+      </ul>
     </div>
-    <!-- /container -->
   </div>
+  <!-- /row -->
 </template>
+<script>
+export default {
+  props: ["product"]
+};
+</script>

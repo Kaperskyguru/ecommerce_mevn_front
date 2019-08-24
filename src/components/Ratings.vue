@@ -20,7 +20,33 @@
           <i class="fa fa-star"></i>
         </div>
         <div class="rating-progress">
+          <div style="width: 100%;"></div>
+        </div>
+        <span class="sum">5</span>
+      </li>
+      <li>
+        <div class="rating-stars">
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star-o"></i>
+        </div>
+        <div class="rating-progress">
           <div style="width: 80%;"></div>
+        </div>
+        <span class="sum">4</span>
+      </li>
+      <li>
+        <div class="rating-stars">
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star-o"></i>
+          <i class="fa fa-star-o"></i>
+        </div>
+        <div class="rating-progress">
+          <div style="width: 60%;"></div>
         </div>
         <span class="sum">3</span>
       </li>
@@ -28,53 +54,27 @@
         <div class="rating-stars">
           <i class="fa fa-star"></i>
           <i class="fa fa-star"></i>
-          <i class="fa fa-star"></i>
-          <i class="fa fa-star"></i>
+          <i class="fa fa-star-o"></i>
+          <i class="fa fa-star-o"></i>
           <i class="fa fa-star-o"></i>
         </div>
         <div class="rating-progress">
-          <div style="width: 60%;"></div>
+          <div style="width: 40%;"></div>
         </div>
         <span class="sum">2</span>
       </li>
       <li>
         <div class="rating-stars">
           <i class="fa fa-star"></i>
-          <i class="fa fa-star"></i>
-          <i class="fa fa-star"></i>
-          <i class="fa fa-star-o"></i>
-          <i class="fa fa-star-o"></i>
-        </div>
-        <div class="rating-progress">
-          <div></div>
-        </div>
-        <span class="sum">0</span>
-      </li>
-      <li>
-        <div class="rating-stars">
-          <i class="fa fa-star"></i>
-          <i class="fa fa-star"></i>
-          <i class="fa fa-star-o"></i>
-          <i class="fa fa-star-o"></i>
-          <i class="fa fa-star-o"></i>
-        </div>
-        <div class="rating-progress">
-          <div></div>
-        </div>
-        <span class="sum">0</span>
-      </li>
-      <li>
-        <div class="rating-stars">
-          <i class="fa fa-star"></i>
           <i class="fa fa-star-o"></i>
           <i class="fa fa-star-o"></i>
           <i class="fa fa-star-o"></i>
           <i class="fa fa-star-o"></i>
         </div>
         <div class="rating-progress">
-          <div></div>
+          <div style="width: 20%;"></div>
         </div>
-        <span class="sum">0</span>
+        <span class="sum">1</span>
       </li>
     </ul>
   </div>

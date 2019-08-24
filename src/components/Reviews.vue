@@ -2,54 +2,7 @@
   <div class="col-md-6">
     <div id="reviews">
       <ul class="reviews">
-        <li>
-          <div class="review-heading">
-            <h5 class="name">John</h5>
-            <p class="date">27 DEC 2018, 8:0 PM</p>
-            <div class="review-rating">
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star-o empty"></i>
-            </div>
-          </div>
-          <div class="review-body">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-          </div>
-        </li>
-        <li>
-          <div class="review-heading">
-            <h5 class="name">John</h5>
-            <p class="date">27 DEC 2018, 8:0 PM</p>
-            <div class="review-rating">
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star-o empty"></i>
-            </div>
-          </div>
-          <div class="review-body">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-          </div>
-        </li>
-        <li>
-          <div class="review-heading">
-            <h5 class="name">John</h5>
-            <p class="date">27 DEC 2018, 8:0 PM</p>
-            <div class="review-rating">
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star-o empty"></i>
-            </div>
-          </div>
-          <div class="review-body">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-          </div>
-        </li>
+        <review :review="review" v-for="(review, i) in reviews" :key="i"></review>
       </ul>
       <ul class="reviews-pagination">
         <li class="active">1</li>
@@ -71,3 +24,19 @@
     </div>
   </div>
 </template>
+<script>
+import Review from "./Review";
+import { mapState } from "vuex";
+export default {
+  data() {
+    return {
+      // reviews: [1, 2, 3]
+    };
+  },
+  components: { Review },
+
+  computed: {
+    ...mapState(["reviews"])
+  }
+};
+</script>

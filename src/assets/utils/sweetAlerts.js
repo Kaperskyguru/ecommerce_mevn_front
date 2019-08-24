@@ -8,20 +8,25 @@ const options = {
 }
 Vue.use(VueSweetalert2, options);
 
-export function successAlert() {
+export function successAlert({
+    title = 'success',
+    message = 'product added to cart'
+}) {
     Vue.swal.fire({
-        type: "success",
-        title: "Product added to cart",
+        type: title,
+        title: message,
         showConfirmButton: false,
         timer: 1500
     });
 }
 
-export function errorAlert() {
+export function errorAlert({
+    message = 'Product already added to cart'
+}) {
     Vue.swal.fire({
         type: "error",
-        title: "Oops...",
-        text: "Product already added to cart",
+        title: 'Oops...',
+        text: message,
         timer: 1500
     });
 }

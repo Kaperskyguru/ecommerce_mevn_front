@@ -5,7 +5,7 @@
       <!-- container -->
       <div class="container">
         <!-- row -->
-        <bread-crumb></bread-crumb>
+        <bread-crumb :product="product"></bread-crumb>
       </div>
       <!-- /container -->
     </div>
