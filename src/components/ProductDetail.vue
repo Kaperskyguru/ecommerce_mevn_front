@@ -56,12 +56,22 @@
             <i class="fa fa-star"></i>
             <i class="fa fa-star-o"></i>
           </div>
-          <a class="review-link">{{reviews.length}} Review(s) | Add your review</a>
+          <a class="review-link"
+            >{{ reviews.length }} Review(s) | Add your review</a
+          >
         </div>
         <div>
           <h3 class="product-price">
-            ${{ product.price }}
-            <del class="product-old-price">$990.00</del>
+            ${{
+              product.discounted_price != "0.00"
+                ? product.discounted_price
+                : product.price
+            }}
+            <del
+              class="product-old-price"
+              v-show="product.discounted_price != '0.00'"
+              >${{ product.price }}</del
+            >
           </h3>
           <span class="product-available">In Stock</span>
         </div>
@@ -74,7 +84,8 @@
                 v-for="(attribute, index) in sizeAttributes"
                 :key="index"
                 :value="attribute.attribute_value_id"
-              >{{attribute.value}}</option>
+                >{{ attribute.value }}</option
+              >
             </select>
           </label>
           <label>
@@ -84,7 +95,8 @@
                 v-for="(attribute, index) in colorAttributes"
                 :key="index"
                 :value="attribute.attribute_value_id"
-              >{{attribute.value}}</option>
+                >{{ attribute.value }}</option
+              >
             </select>
           </label>
         </div>
@@ -93,7 +105,7 @@
           <div class="qty-label">
             Qty
             <div class="input-number">
-              <input type="number" />
+              <input type="number" v-model="quantity" />
               <span class="qty-up">+</span>
               <span class="qty-down">-</span>
             </div>
@@ -105,21 +117,23 @@
 
         <ul class="product-btns">
           <li>
-            <a href="#">
-              <i class="fa fa-heart-o"></i> add to wishlist
-            </a>
+            <a href="#"> <i class="fa fa-heart-o"></i> add to wishlist </a>
           </li>
           <li>
-            <a href="#">
-              <i class="fa fa-exchange"></i> add to compare
-            </a>
+            <a href="#"> <i class="fa fa-exchange"></i> add to compare </a>
           </li>
         </ul>
 
         <ul class="product-links">
           <li>Category:</li>
           <li>
-            <router-link tag="li" :to="{name:'products', params:{ category: product.category_id }}">
+            <router-link
+              tag="li"
+              :to="{
+                name: 'products',
+                params: { category: product.category_id }
+              }"
+            >
               <a>{{ product.category }}</a>
             </router-link>
           </li>
@@ -167,7 +181,7 @@
             <a data-toggle="tab" href="#tab2">Details</a>
           </li>
           <li>
-            <a data-toggle="tab" href="#tab3">Reviews ({{reviews.length}})</a>
+            <a data-toggle="tab" href="#tab3">Reviews ({{ reviews.length }})</a>
           </li>
         </ul>
         <!-- /product tab nav -->
@@ -237,11 +251,19 @@ export default {
     Ratings
   },
 
+  data() {
+    return {
+      quantity: 1
+    };
+  },
+
   computed: {
     ...mapState(["sizeAttributes", "colorAttributes", "reviews"])
   },
   methods: {
     addToCart(product) {
+      // console.log(this.discount);
+      product.quantity = this.quantity;
       if (this.$cart.has(product)) {
         errorAlert({ message: "Product already added to cart" });
       } else {

@@ -40,21 +40,18 @@ const store = new Vuex.Store({
         },
         async loadSizeAttributes({
             commit,
-            // attribute
-        }) {
-            commit("loadSizeAttributes", await AttributeRepository.find(1));
+        }, payload) {
+            commit("loadSizeAttributes", await AttributeRepository.find(payload.id));
         },
         async loadColorAttributes({
             commit,
-            // attribute
-        }) {
-            commit("loadColorAttributes", await AttributeRepository.find(2));
+        }, payload) {
+            commit("loadColorAttributes", await AttributeRepository.find(payload.id));
         },
         async loadReviews({
-            commit,
-            // id
-        }) {
-            commit("loadReviews", await ReviewRepository.getReviewsByProductId(97));
+            commit
+        }, payload) {
+            commit("loadReviews", await ReviewRepository.getReviewsByProductId(payload.id));
         }
 
     },

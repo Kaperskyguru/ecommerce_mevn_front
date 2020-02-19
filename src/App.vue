@@ -20,9 +20,6 @@ export default {
     this.$store.dispatch("getCategories", { self: this });
     this.$store.dispatch("getProducts", { self: this });
     this.$store.dispatch("getProductCategories", { self: this });
-    this.$store.dispatch("loadSizeAttributes", { self: this });
-    this.$store.dispatch("loadColorAttributes", { self: this });
-    this.$store.dispatch("loadReviews", { self: this, id: 1 });
   }
 };
 </script>

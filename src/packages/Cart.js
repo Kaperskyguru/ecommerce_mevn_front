@@ -4,6 +4,15 @@ export default {
         Vue.cart = {
             cart: [],
             add: function (product) {
+                if(product.discounted_price != '0.00'){
+                    product.total = product.discounted_price * product.quantity;
+                    product.realPrice = product.discounted_price;
+                } else{
+                    product.total = product.price * product.quantity;
+                    product.realPrice = product.price;
+
+                }
+                
                 this.cart.push(product);
                 localStorage.setItem("product_" + product.product_id, JSON.stringify(product));
             },
@@ -44,13 +53,23 @@ export default {
             getTotalPrice: function () {
                 let amount = 0;
 
-                let add = (acc, product) => parseFloat(product.price) + acc;
+                let add = (acc, product) => parseFloat(product.total) + acc;
 
                 let result = this.cart.reduce(add, amount);
 
                 return result.toFixed(2);
+            },
+
+            update: function(product, col, value){
+                if (this.has(product)) {
+                    product[col] = value;
+                    return true;
+                }
+                return false;
             }
         };
+
+
 
         Object.defineProperty(Vue.prototype, "$cart", {
             get() {

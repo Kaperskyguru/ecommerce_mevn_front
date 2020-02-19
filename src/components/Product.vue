@@ -68,6 +68,7 @@ export default {
 
   methods: {
     addToCart(product) {
+      product.quantity = 1;
       if (this.$cart.has(product)) {
         errorAlert();
       } else {

@@ -6,9 +6,7 @@
         <div class="container">
           <ul class="header-links pull-left">
             <li>
-              <a href="#">
-                <i class="fa fa-phone"></i> +234 (0)8145655380
-              </a>
+              <a href="#"> <i class="fa fa-phone"></i> +234 (0)8145655380 </a>
             </li>
             <li>
               <a href="#">
@@ -23,14 +21,10 @@
           </ul>
           <ul class="header-links pull-right">
             <li>
-              <a href="#">
-                <i class="fa fa-dollar"></i> USD
-              </a>
+              <a href="#"> <i class="fa fa-dollar"></i> USD </a>
             </li>
             <li>
-              <a href="#">
-                <i class="fa fa-user-o"></i> My Account
-              </a>
+              <a href="#"> <i class="fa fa-user-o"></i> My Account </a>
             </li>
           </ul>
         </div>
@@ -65,7 +59,8 @@
                       v-for="(category, index) in categories"
                       :key="index"
                       :value="category.category_id"
-                    >{{ category.name }}</option>
+                      >{{ category.name }}</option
+                    >
                   </select>
                   <input class="input" placeholder="Search here" />
                   <button class="search-btn">Search</button>
@@ -89,14 +84,22 @@
 
                 <!-- Cart -->
                 <div class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                  <a
+                    class="dropdown-toggle"
+                    data-toggle="dropdown"
+                    aria-expanded="true"
+                  >
                     <i class="fa fa-shopping-cart"></i>
                     <span>Your Cart</span>
                     <div class="qty">{{ carts.length }}</div>
                   </a>
                   <div class="cart-dropdown">
                     <div class="cart-list">
-                      <div class="product-widget" v-for="(product, i) in carts" :key="i">
+                      <div
+                        class="product-widget"
+                        v-for="(product, i) in carts"
+                        :key="i"
+                      >
                         <div class="product-img">
                           <img src="assets/img/product01.png" />
                         </div>
@@ -105,11 +108,14 @@
                             <a href="#">{{ product.name }}</a>
                           </h3>
                           <h4 class="product-price">
-                            <span class="qty">1x</span>
-                            ${{ product.price }}
+                            <span class="qty">{{ product.quantity }}x</span>
+                            ${{ product.total }}
                           </h4>
                         </div>
-                        <button class="delete" v-on:click="removeProduct(product)">
+                        <button
+                          class="delete"
+                          v-on:click="removeProduct(product)"
+                        >
                           <i class="fa fa-close"></i>
                         </button>
                       </div>
@@ -165,7 +171,10 @@
               v-for="(category, index) in categories"
               :key="index"
               tag="li"
-              :to="{name:'products', params:{ category: category.category_id }}"
+              :to="{
+                name: 'products',
+                params: { category: category.category_id }
+              }"
             >
               <a>{{ category.name }}</a>
             </router-link>

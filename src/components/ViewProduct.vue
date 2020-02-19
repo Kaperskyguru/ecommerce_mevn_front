@@ -73,6 +73,12 @@ export default {
 
   created() {
     this.getProduct();
+    this.$store.dispatch("loadSizeAttributes", { self: this, id: 1 });
+    this.$store.dispatch("loadColorAttributes", { self: this, id: 2 });
+    this.$store.dispatch("loadReviews", {
+      self: this,
+      id: this.$route.params.id
+    });
   },
   methods: {
     async getProduct() {
